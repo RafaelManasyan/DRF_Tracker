@@ -30,5 +30,39 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    celery:
+      build: .
+      container_name: celery
+      command: celery -A config worker --loglevel=info
+      env_file:
+        - .env
+      depends_on:
+        - redis
+        - backend
+      restart: unless-stopped
+
+    celery_beat:
+      build: .
+      container_name: celery_beat
+      command: celery -A config beat --loglevel=info
+      env_file:
+        - .env
+      depends_on:
+        - redis
+        - backend
+      restart: unless-stopped
+
 volumes:
   pg_data:

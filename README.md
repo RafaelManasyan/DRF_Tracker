@@ -23,3 +23,12 @@ POSTGRES_DB=mydatabase
 
 4. **Остановка контейнеров**
 ```docker-compose down```
+
+## Проверка Redis
+```docker logs -f redis```
+
+## Проверка Celery
+```docker logs -f celery```
+
+## Проверка Celery Beat
+```docker logs -f celery_beat```
