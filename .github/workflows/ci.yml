@@ -49,13 +49,9 @@ jobs:
           pip install -r requirements.txt
         EOF
 
-    - name: Set up environment variables
-      run: |
-        echo "SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> .env
-        echo "DEBUG=True" >> .env
-        echo "ALLOWED_HOSTS=*" >> .env`
-
     - name: Apply migrations on server
+      env:
+        DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           cd ${{ secrets.DEPLOY_DIR }}
