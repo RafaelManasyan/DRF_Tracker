@@ -24,7 +24,7 @@ class Habit(models.Model):
         verbose_name="Периодичность (в днях)", default=1
     )
     fee = models.CharField(
-        verbose_name="Вознаграждение за выполненную привычку", null=True, blank=True
+        max_length=250, verbose_name="Вознаграждение за выполненную привычку", null=True, blank=True
     )
     action_time = models.DurationField(
         verbose_name="Время на выполнение", default=timedelta(seconds=120)
