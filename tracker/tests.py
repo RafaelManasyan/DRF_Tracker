@@ -22,20 +22,20 @@ class HabitAPITests(APITestCase):
 
     def test_my_habit_list(self):
         """Тест для MyHabitListAPIView"""
-        url = reverse("habits")
+        url = reverse("tracker:habits")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(len(response.data.get("results", [])) >= 1)
 
     def test_public_habit_list(self):
         """Тест для PublicHabitListView"""
-        url = reverse("public-habits")
+        url = reverse("tracker:public-habits")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_habit(self):
         """Тест для HabitCreateAPIView"""
-        url = reverse("create-habit")
+        url = reverse("tracker:create-habit")
         data = {
             "place": "office",
             "time": "09:00:00",
@@ -48,6 +48,6 @@ class HabitAPITests(APITestCase):
 
     def test_habit_detail(self):
         """Тест для HabitAPIView (RetrieveUpdateDestroyAPIView)"""
-        url = reverse("habit", kwargs={"pk": self.habit.pk})
+        url = reverse("tracker:habit", kwargs={"pk": self.habit.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
