@@ -44,6 +44,7 @@ class HabitAPITests(APITestCase):
             "is_public": False
         }
         response = self.client.post(url, data)
+        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_habit_detail(self):
