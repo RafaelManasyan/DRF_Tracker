@@ -40,6 +40,8 @@ jobs:
       uses: webfactory/ssh-agent@v0.8.0
       with:
         ssh-private-key: ${{ secrets.SSH_KEY }}
+        log-public-key: true
+        log-output: true
 
     - name: Copy project files to server
       run: |
