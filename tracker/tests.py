@@ -40,6 +40,7 @@ class HabitAPITests(APITestCase):
             "place": "office",
             "time": "09:00:00",
             "action": "read a book",
+            "action_time": 100,
             "period": 1,
             "is_public": False
         }
