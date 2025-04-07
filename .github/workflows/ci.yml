@@ -43,7 +43,13 @@ jobs:
       uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ secrets.SSH_KEY }}
-        log-public-key: true
+
+    - name: Adding Known Hosts
+      run: il
+        ssh-keyscan -H ${{ secrets. SERVER_IP }} >> ~/.ssh/known_hosts
+        ssh-keyscan -H
+        echo "DEBUG KNOWN_HOSTS"
+        cat ~/.ssh/known_hosts
 
     - name: Add server to known_hosts
       run: |
