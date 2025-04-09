@@ -88,9 +88,8 @@ jobs:
 
     - name: Generate .env file
       run: |
-        echo "SECRET_KEY=\"${{ secrets.SECRET_KEY }}\"" > .env
+        echo "SECRET_KEY=\"${{ secrets.DJANGO_SECRET_KEY }}\"" > .env
         echo "DEBUG=False" >> .env
-        echo "ALLOWED_HOSTS=\"${{ secrets.ALLOWED_HOSTS }}\"" >> .env
         cat .env
 
     - name: Upload .env to server
