@@ -75,6 +75,10 @@ jobs:
       run: |
         rsync -avz .env ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}/.env
 
+    - name: Check .env on server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cat ${{ secrets.DEPLOY_DIR }}/.env"
+
     - name: Apply migrations on server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << EOF
