@@ -55,9 +55,13 @@ jobs:
     - name: Install dependencies on server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          cd ${{ secrets.DEPLOY_DIR }}
-          python3 -m venv venv
+          set -e
+          sudo apt update
+          sudo apt install -y python3.12-venv python3-pip
+          cd /home/raf/app
+          python3.12 -m venv venv
           source venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
         EOF
 
