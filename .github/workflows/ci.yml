@@ -50,7 +50,7 @@ jobs:
 
     - name: Copy files to server
       run: |
-        rsync -avz --exclude '__pycache__' --rsync-path="mkdir -p /raf/root && rsync" . ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}
+        rsync -avz --exclude '__pycache__' --rsync-path="mkdir -p home/raf/app && rsync" . ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}
 
     - name: Install dependencies on server
       run: |
