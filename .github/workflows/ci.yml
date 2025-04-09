@@ -97,6 +97,9 @@ jobs:
       run: |
         rsync -avz .env ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}/.env
 
+    - name: Debug SECRET_KEY
+      run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}"
+
     - name: Check .env on server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cat ${{ secrets.DEPLOY_DIR }}/.env"
