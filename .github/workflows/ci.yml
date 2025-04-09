@@ -91,6 +91,7 @@ jobs:
         echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" > .env
         echo "DEBUG=False" >> .env
         echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> .env
+        cat .env        
 
     - name: Upload .env to server
       run: |
@@ -99,6 +100,10 @@ jobs:
     - name: Check .env on server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cat ${{ secrets.DEPLOY_DIR }}/.env"
+
+    - name: Check SECRET_KEY on server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "source ${ secrets.DEPLOY_DIR }/.env && echo \$SECRET_KEY"
 
     - name: Apply migrations on server
       run: |
