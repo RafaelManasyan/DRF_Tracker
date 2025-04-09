@@ -115,9 +115,16 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             set -e
             cd ${{ secrets.DEPLOY_DIR }}
-            docker compose down
-            docker compose pull
-            docker compose up -d --build
+            echo "Stopping containers..."
+            docker-compose down || { echo "docker-compose down failed"; exit 1; }
+            
+            echo "Pulling latest images..."
+            docker-compose pull || { echo "docker-compose pull failed"; exit 1; }
+
+            echo "Rebuilding and restarting containers..."
+            docker-compose up -d --build || { echo "docker-compose up failed"; exit 1; }
+            
+            echo "Docker Compose successfully restarted."
           EOF
 
       - name: Check running containers
