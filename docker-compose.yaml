@@ -14,11 +14,11 @@ services:
 
   db:
     image: postgres:latest
-    container_name: postgres_db
+    container_name: postgres_data
     env_file:
       - .env
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -27,6 +27,7 @@ services:
       interval: 10s
       timeout: 10s
       retries: 10
+      start_period: 30s
 
   redis:
     image: redis:latest

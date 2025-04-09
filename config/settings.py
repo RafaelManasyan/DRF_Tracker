@@ -129,7 +129,7 @@ AUTH_USER_MODEL = "users.User"
 TG_URL = "https://api.telegram.org/bot"
 TG_TOKEN = os.getenv("BOT_TOKEN")
 
-CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
