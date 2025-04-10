@@ -111,6 +111,17 @@ jobs:
               echo "Docker Compose already installed."
             fi
           EOF
+          
+      - name: Wait for backend container to be ready
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            set -e
+            until docker-compose exec backend curl -s http://localhost:8000; do
+              echo "Waiting for backend to be ready..."
+              sleep 5
+            done
+            echo "Backend is ready."
+          EOF
 
       - name: Restart docker-compose on server
         run: |
@@ -133,9 +144,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             set -e
-            echo "Running database migrations..."
             cd ${{ secrets.DEPLOY_DIR }}
-            docker-compose exec tracker python manage.py migrate || { echo "Migrations failed"; exit 1; }
+            echo "Running database migrations..."
+            docker-compose exec backend python manage.py migrate || { echo "Migrations failed"; exit 1; }
           EOF
 
       - name: Show Postgres logs if failed
