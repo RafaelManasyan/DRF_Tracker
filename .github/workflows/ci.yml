@@ -135,7 +135,7 @@ jobs:
             set -e
             echo "Running database migrations..."
             cd ${{ secrets.DEPLOY_DIR }}
-            docker-compose exec web python manage.py migrate || { echo "Migrations failed"; exit 1; }
+            docker-compose exec tracker python manage.py migrate || { echo "Migrations failed"; exit 1; }
           EOF
 
       - name: Show Postgres logs if failed
