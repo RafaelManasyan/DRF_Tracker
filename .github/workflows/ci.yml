@@ -126,6 +126,10 @@ jobs:
             
             echo "Docker Compose successfully restarted."
           EOF
+          
+      - name: Show Postgres logs if failed
+        if: failure()
+        run: docker logs postgres_data || true
 
       - name: Check running containers
         run: |
