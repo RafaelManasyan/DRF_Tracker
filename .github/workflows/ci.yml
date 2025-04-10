@@ -126,10 +126,11 @@ jobs:
             
             echo "Docker Compose successfully restarted."
           EOF
-          
+
       - name: Show Postgres logs if failed
         if: failure()
-        run: docker logs postgres_data || true
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "docker logs postgres_data || true"
 
       - name: Check running containers
         run: |
