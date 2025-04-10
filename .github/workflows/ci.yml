@@ -112,6 +112,15 @@ jobs:
             fi
           EOF
 
+      - name: Run database migrations
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            set -e
+            echo "Running database migrations..."
+            cd ${{ secrets.DEPLOY_DIR }}
+            docker-compose exec web python manage.py migrate || { echo "Migrations failed"; exit 1; }
+          EOF
+
       - name: Restart docker-compose on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
