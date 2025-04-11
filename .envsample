@@ -1,0 +1,16 @@
+SECRET_KEY=
+DEBUG=
+
+[postgres]
+DB_NAME =
+DB_USER =
+PASSWORD =
+HOST =
+PORT =
+
+# for postgresql after deploy
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+
+BOT_TOKEN=
